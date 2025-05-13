@@ -22,7 +22,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index),
     path('product_detail/<id>/', views.product_detail),
     path('product/<id>/', views.ProductDetailAPI.as_view()),
     path('products/', views.ProductAPI.as_view()),

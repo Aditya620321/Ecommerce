@@ -11,6 +11,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -19,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+# STATIC_ROOT = BASE_DIR / 'staticfiles' 
 STATICFILES_DIRS = [BASE_DIR / 'public']  # Adjust this if your static files are in a different directory.
 
 # Media files
@@ -37,9 +38,9 @@ LOGIN_URL = '/accounts/login/'
 SECRET_KEY = 'django-insecure-vx-#)^q$wrsi%axu+01l@*@vci)b63d@+o4)kmr%&c8yt8_&4m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -87,15 +88,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'reommend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# # Database
+# # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -132,10 +133,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_TEST_PUBLIC_KEY = 'your-public-key-here'
@@ -143,3 +145,16 @@ STRIPE_TEST_SECRET_KEY = 'your-secret-key-here'
 
 RAZORPAY_KEY_ID = 'rzp_test_lqqTLCD0ww7cQ8'
 RAZORPAY_KEY_SECRET = 'cv1ldLcOD49evWoLzlVLW17Y'
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+ALLOWED_HOSTS = ['.onrender.com']
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
