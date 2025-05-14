@@ -148,7 +148,8 @@ RAZORPAY_KEY_SECRET = 'cv1ldLcOD49evWoLzlVLW17Y'
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['ecommercee-dgj6.onrender.com']
+
 
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
