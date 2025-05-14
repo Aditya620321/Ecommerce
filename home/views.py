@@ -23,7 +23,7 @@ def add_to_cart(request, product_id):
 
 def home_view(request):
     # Your home page logic
-    return render(request, 'home/home.html')
+    return render(request, 'home/index.html')
 
 def cart_view(request):
     cart = request.session.get('cart', {})

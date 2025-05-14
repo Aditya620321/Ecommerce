@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-c2aiz84%f580f10e374fm&5j^k22q!^%7#g+s54_lr+ql5$b&4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ecommercee-dgj6.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommercee-dgj6.onrender.com']
 
 
 
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'accounts',
-    'home'
+    'home',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware'
 ]
 
 ROOT_URLCONF = 'ecomm.urls'
@@ -79,10 +82,9 @@ WSGI_APPLICATION = 'ecomm.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3'  # fallback if DATABASE_URL isn't set
+    )
 }
 
 
@@ -124,8 +126,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'   # This is where the static files will be collected in production.
-STATICFILES_DIRS = [BASE_DIR / 'public']  # Points to where your static files are located in development.
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   # This is where the static files will be collected in production.
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # Points to where your static files are located in development.
 
 # Media files
 MEDIA_URL = '/media/'

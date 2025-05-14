@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'home',
     'accounts',
     'rest_framework',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware'
 ]
 
 ROOT_URLCONF = 'reommend.urls'
@@ -148,11 +150,13 @@ RAZORPAY_KEY_SECRET = 'cv1ldLcOD49evWoLzlVLW17Y'
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['ecommercee-dgj6.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommercee-dgj6.onrender.com']
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3'  # fallback if DATABASE_URL isn't set
+    )
 }
 
 STATIC_URL = '/static/'

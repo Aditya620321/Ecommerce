@@ -6,7 +6,7 @@ from django.views.generic import RedirectView
 app_name = 'home'
 
 urlpatterns = [
-     path('', RedirectView.as_view(url='/accounts/register/', permanent=False)),
+     path('', views.home_view, name='home'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', include('home.urls')),
     path('product_detail/<id>/', views.product_detail),
     path('product/<id>/', views.ProductDetailAPI.as_view()),
     path('products/', views.ProductAPI.as_view()),
@@ -38,13 +39,11 @@ urlpatterns = [
     path('checkout/', views.checkout, name='checkout'),
 
     # App-specific
-    path('', include('home.urls')),
+    # path('', include('home.urls')),
 
-    # ✅ Custom login/register
-    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),  # Custom registration and login
 
-    # ✅ Django's built-in auth (password reset, etc.)
-    path('accounts/', include('django.contrib.auth.urls')),
+
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
