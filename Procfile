@@ -1,1 +1,2 @@
-web: gunicorn Final.wsgi
+web: gunicorn ecomm.wsgi
+
